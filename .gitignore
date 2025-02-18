@@ -169,3 +169,8 @@ cython_debug/
 
 # PyPI configuration file
 .pypirc
+
+#large files and datasets
+
+pytorch/trained-in-cluster
+pytorch/self-supervision-dataset
