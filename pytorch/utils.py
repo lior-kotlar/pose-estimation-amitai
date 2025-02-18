@@ -1,48 +1,6 @@
+import tensorflow as tf
 import torch
 import numpy as np
-
-
-def torch_find_peaks_argmax(x):
-    """ Finds the maximum value in each channel and returns the location and value.
-    Args:
-        x: rank-4 tensor (samples, height, width, channels)
-
-    Returns:
-        peaks: rank-3 tensor (samples, [x, y, val], channels)
-    """
-
-    x = torch.from_numpy(x)
-    # formatting the input to match the channel ordering
-    x = x.to(memory_format=torch.channels_last)
-
-    in_shape = x.size()
-
-    image_size = int(in_shape[1])
-
-    # Flatten height/width dims
-    flattened = torch.reshape(x, [in_shape[0], -1, in_shape[-1]])
-
-    # Find peaks in linear indices
-    idx = torch.argmax(flattened, axis=1)
-
-    # Convert linear indices to subscripts
-    rows = torch.floor_divide(idx.type(torch.int32), in_shape[1])
-    cols = torch.floor_divide(idx.type(torch.int32), in_shape[1])
-    # rows = torch.floor_divide(tf.cast(idx, tf.int32), in_shape[1])
-    # cols = torch.floor_divide(tf.cast(idx, tf.int32), in_shape[1])
-
-    # Dumb way to get actual values without indexing
-    vals = torch.amax(flattened, 1)
-    vals = vals.type(torch.float32)
-
-    pred = torch.stack([cols.type(torch.float32), rows.type(torch.float32), vals], 1)
-    # Return N x 3 x C tensor
-
-    pred = np.transpose(pred, (0, 2, 1))
-    pred = pred[..., :2]
-    # pred = pred / image_size  # normalize points
-
-    return pred
 
 
 def tf_find_peaks_argmax(x):
