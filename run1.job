@@ -1,0 +1,27 @@
+#!/bin/csh
+#SBATCH --job-name=run1
+#SBATCH -o current_runs/%x_%J.out
+#SBATCH -e current_runs/%x_%J.err
+#SBATCH --mem=32g
+#SBATCH -c10
+#SBATCH --killable
+#SBATCH --time=24:0:0
+#SBATCH --gres=gpu:1,vmem:20g
+
+# run using $ sbatch FILE.job
+
+echo "started working"
+
+# in order for aliases to work, we need to tell bash to expand them:
+# shopt -s expand_aliases
+source ~/.bashrc
+
+cd /cs/labs/tsevi/amitaiovadia/pose_estimation_venv
+
+source bin/activate.csh
+
+# kge start data/Hetionet/Distmult_hetio_train.yaml
+module load tensorflow
+python train.py train_config4.json
+
+echo "finished working"
