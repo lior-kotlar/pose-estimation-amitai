@@ -1,0 +1,2 @@
+Epoch,Train Loss,Val Loss,L2 Loss,L2 Std,L2 Max Outlier
+1,0.001179,0.0009337,74.99,60.28,219.2
