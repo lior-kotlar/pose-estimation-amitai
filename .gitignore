@@ -171,7 +171,9 @@ cython_debug/
 .pypirc
 
 #large files and datasets
-
 pytorch/trained-in-cluster/
 pytorch/self-supervision-dataset/
 training_datasets/
+
+#pycharm related
+.idea/
